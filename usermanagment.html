@@ -1,0 +1,504 @@
+﻿<section class="content-header">
+    <!--<h1>
+        <i class="fa fa-building"></i>
+        {{restaurantdetails.Description}}
+
+    </h1>
+    <ol class="breadcrumb">
+        <li><a><i class="fa fa-dashboard"></i> Home</a></li>
+
+    </ol>-->
+    <style>
+        .credit-card-div span {
+            padding-top: 10px;
+        }
+
+        .credit-card-div img {
+            padding-top: 30px;
+        }
+
+        .credit-card-div .small-font {
+            font-size: 9px;
+        }
+
+        .credit-card-div .pad-adjust {
+            padding-top: 10px;
+        }
+
+        .form-group input[type="checkbox"] {
+            display: none;
+        }
+
+            .form-group input[type="checkbox"] + .btn-group > label span {
+                width: 20px;
+            }
+
+                .form-group input[type="checkbox"] + .btn-group > label span:first-child {
+                    display: none;
+                }
+
+                .form-group input[type="checkbox"] + .btn-group > label span:last-child {
+                    display: inline-block;
+                }
+
+            .form-group input[type="checkbox"]:checked + .btn-group > label span:first-child {
+                display: inline-block;
+            }
+
+            .form-group input[type="checkbox"]:checked + .btn-group > label span:last-child {
+                display: none;
+            }
+
+        .mdtTable .mdt-footer, .mdtTable tr th {
+            height: 0px !important;
+        }
+
+        .active, .inactive {
+            font-size: 40px;
+            cursor: pointer;
+        }
+
+        .active, .inactive {
+            font-size: 40px;
+            cursor: pointer;
+        }
+
+        i.active {
+            color: #5cb85c
+        }
+
+        i.inactive {
+            color: #d9534f
+        }
+
+        .well {
+            padding: 0px !important;
+            margin-bottom: 0px !important;
+        }
+    </style>
+</section>
+
+<section class="content">
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-4">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Restaurant Category</h3>
+                    <button type="button" data-ng-hide="editMode" data-ng-click="editMode = true;" class="btn btn-sm btn-info btn-flat pull-right">
+                        <span class="glyphicon  glyphicon-edit" aria-hidden="true"></span> Edit
+                    </button>
+                    <button type="button" data-ng-show="editMode" data-ng-click="ResetBack();editMode = false" class="btn btn-sm btn-warning btn-flat pull-right">
+                        <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> Cancel
+                    </button>
+                    <button type="submit" data-ng-show="editMode" data-ng-click="UpdateRestaurantDetails();editMode = false" class="btn btn-sm btn-success btn-flat pull-right">
+                        <span class="glyphicon glyphicon-floppy-save " style="color:purple" aria-hidden="true"></span> Update
+                    </button>
+                </div>
+
+
+                <div class="box-body ">
+                    <div class="col-md-12">
+                        <p class="text-muted">
+                            <span data-ng-hide="editMode">
+                                {{restaurantdetails.Description}}
+                            </span>
+                            <textarea type="text" data-ng-show="editMode" class="form-control" name="RestaurantDescription" placeholder="Restaurant Description " maxlength="150" rows="1" data-ng-model="restaurantdetails.Description"></textarea>
+
+                        </p>
+                        <hr>
+                        <strong><i class="fa fa-map-marker margin-r-5"></i> Location</strong>
+                        <br />
+                        <p>
+                            <div data-ng-show="editMode" class="col-md-12" ng-repeat="RestaurantAddressVM in restaurantdetails.RestaurantAddressVM">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><span class="fa fa-paper-plane fa"></span></span>
+                                        <input class="form-control"
+                                               vs-google-autocomplete
+                                               ng-model="RestaurantAddressVM.AddressDetails"
+                                               vs-street-number="RestaurantAddressVM.StreetNumber"
+                                               vs-street="RestaurantAddressVM.StrtName"
+                                               vs-address-info="RestaurantAddressVM.StreetName"
+                                               vs-city="RestaurantAddressVM.City"
+                                               vs-state="RestaurantAddressVM.State"
+                                               vs-country="RestaurantAddressVM.Country"
+                                               vs-post-code="RestaurantAddressVM.Zip"
+                                               vs-latitude="RestaurantAddressVM.lat"
+                                               vs-longitude="RestaurantAddressVM.lng"
+                                               name="RestaurantAddressVM.AddressDetails1"
+                                               id="RestaurantAddressVM.AddressDetails" />
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-home"></span></span>
+                                        <input type="text" class="form-control" placeholder="Street Name" readonly="readonly" name="StreetName" data-ng-model="RestaurantAddressVM.StreetName" required />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-home"></span></span>
+                                        <input type="text" class="form-control" placeholder="City" readonly="readonly" name="city" data-ng-model="RestaurantAddressVM.City" required />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-list"></span></span>
+                                        <input type="text" class="form-control" placeholder="State" readonly="readonly" name="State" data-ng-model="RestaurantAddressVM.State" required />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-home"></span></span>
+                                        <input type="text" class="form-control" placeholder="Zip Code" readonly="readonly" name="ZipCode" data-ng-model="RestaurantAddressVM.Zip" required />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-home"></span></span>
+                                        <input type="text" class="form-control" placeholder="Country" readonly="readonly" name="Country" data-ng-model="RestaurantAddressVM.Country" required />
+                                    </div>
+                                </div>
+                                <hr>
+                                <strong><i class="fa fa-phone-square margin-r-5"></i> Contacts</strong>
+                                <br />
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-earphone"></span>
+                                        </span>
+                                        <input type="text" class="form-control" placeholder="(999) 999-9999" name="PrimaryPhone" data-ng-model="RestaurantAddressVM.PrimaryPhone" pattern="[0-9]{10,12}" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-repeat="restaurantAddress in restaurantdetails.RestaurantAddressVM">
+                                <span class="text-muted" data-ng-hide="editMode">{{restaurantAddress.StreetName}}</span>
+                                <br />
+                                <span class="text-muted" data-ng-hide="editMode">{{restaurantAddress.City}}</span>
+                                <br />
+                                <span class="text-muted" data-ng-hide="editMode">{{restaurantAddress.State}}</span>
+
+                                <span class="text-muted" data-ng-hide="editMode">{{restaurantAddress.Zip}}</span>
+                                <br />
+                                <span class="text-muted" data-ng-hide="editMode">{{restaurantAddress.Country}}</span>
+
+                                <hr>
+                                <strong data-ng-hide="editMode"><i class="fa fa-phone-square margin-r-5"></i> Contacts</strong>
+
+                                <br />
+                                <span class="text-muted" data-ng-hide="editMode"> {{restaurantAddress.PrimaryPhone}}</span>
+
+
+                            </div>
+                        </p>
+                        <hr>
+                    </div>
+                    <div class="col-md-12">
+                        <strong> <i class="fa fa-building margin-r-5"> </i>Subscription Details</strong>
+
+                        <div ng-repeat="subscriptionplan in subscriptiondetails.SubscriptionPlanVm">
+                            <i class="info-box-text"></i> Plan Name :<span class="text-muted">{{subscriptionplan.Name}}</span><br />
+                        </div>
+                        <i class="info-box-text"></i> Start Date :
+                        <span class="text-muted">{{subscriptiondetails.StartDate | date : "M/d/yy"}}</span><br />
+                        <i class="info-box-text"></i> End Date :
+                        <span class="text-muted">{{subscriptiondetails.EndDate | date : "M/d/yy"}}</span><br />
+
+                        <div class="[ form-group ]">
+                            <input type="checkbox" name="fancy-checkbox-primary" id="fancy-checkbox-primary" ng-model="showDetails" autocomplete="off" />
+                            <label for="fancy-checkbox-primary" class="btn btn-sm btn-info btn-flat pull-right">
+                                <span class="glyphicon  glyphicon-edit" aria-hidden="true"></span> Upgrade
+                            </label>
+                            <!--<div class="[ btn-group ]">
+                                <label for="fancy-checkbox-primary" class="[ btn btn-primary ]">
+                                    <span class="[ glyphicon glyphicon-ok ]"></span>
+                                    <span> </span>
+                                </label>
+                                <label for="fancy-checkbox-primary" class="btn btn-sm btn-info btn-flat pull-right">
+                                    Upgrade
+                                </label>
+                            </div>-->
+                        </div>
+                        <!--<input type="checkbox" ng-model="showDetails" class="" /> Upgrade-->
+
+                    </div>
+                </div>
+            </div>
+            <!--<div class="box-body ">-->
+
+        </div>
+
+        <form class="form-demo" role="form" novalidate ng-class="{'ng-submitted':submitted}" name="AddUserForm" data-ng-submit="UserItem()">
+            <div class="col-md-4">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Add Users</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-md-12">
+                            <h5 style="color:red;font-weight:bold;padding-left:30px;">{{ UserErrorMessage}}</h5>
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <input placeholder="Username" type="email" data-ng-model="UserInfo.UserDetails.Username" class="form-control" required />
+                                </div>
+                            </div>
+
+                            <div class="row"></div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <input placeholder="Password" type="password" data-ng-model="UserInfo.UserDetails.Password" class="form-control" required />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <button type="submit" value="Add Users" class="btn btn-sm btn-primary">
+                                    Add Users
+                                </button>
+                            </div>
+
+                            <hr>
+                            <strong><i class="fa fa-map-marker margin-r-5"></i> Users</strong>
+                            <hr>
+                            <div>
+
+                                <mdt-table sortable-columns="true" animate-sort-icon="true"
+                                           paginated-rows="{isEnabled: true, rowsPerPageValues: [5,10,20,100]}">
+                                    <mdt-header-row>
+                                        <mdt-column align-rule="left">User Name</mdt-column>
+                                        <mdt-column align-rule="left">IsLocked</mdt-column>
+                                    </mdt-header-row>
+                                    <mdt-row ng-repeat="users in restaurantusers">
+                                        <mdt-cell html-content="true">
+                                            <i class="fa fa-pencil-square-o" style="color:#6A1B9A" aria-hidden="true"></i>
+                                            {{users.Username}}
+                                        </mdt-cell>
+                                        <mdt-cell html-content="true">
+                                            <div class="well">
+                                                <i class="fa fa-toggle-on active" ng-if="users.IsLocked == true" ng-click="changeStatus(users);"></i>
+                                                <i class="fa fa-toggle-on fa-rotate-180 inactive" ng-if="users.IsLocked  == false" ng-click="changeStatus(users);"></i>
+                                            </div>
+                                        </mdt-cell>
+                                    </mdt-row>
+                                </mdt-table>
+                            </div>
+
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+
+        </form>
+        <div class="col-md-4">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Vendors</h3>
+                </div>
+                <div class="box-body">
+                    <div class="col-md-12">
+
+                        <div>
+
+
+                            <mdt-table sortable-columns="true" animate-sort-icon="true"
+                                       paginated-rows="{isEnabled: false, rowsPerPageValues: [5,10,20,100]}">
+                                <mdt-header-row>
+                                    <mdt-column align-rule="left">Vendor Name</mdt-column>
+                                    <mdt-column align-rule="left">Contact Name</mdt-column>
+                                </mdt-header-row>
+                                <mdt-row ng-repeat="vendor in latestvendors">
+
+                                    <mdt-cell html-content="true">
+                                        <i class="fa fa-pencil-square-o" style="color:#6A1B9A" aria-hidden="true"></i>
+                                        {{vendor.Name}}
+
+
+                                    </mdt-cell>
+                                    <mdt-cell>{{vendor.SalesAgent}}</mdt-cell>
+
+
+
+                                </mdt-row>
+                            </mdt-table>
+                        </div>
+                    </div>
+                </div>
+
+                <!--</div>-->
+
+
+            </div>
+        </div>
+    </div><div>
+        <form class="form-demo" role="form" novalidate ng-class="{'ng-submitted':submitted}" name="PaymentItemForm" data-ng-submit="PaymentInfo()">
+            <div class="row" ng-show="showDetails">
+                <div class="box box-info">
+                    <div class="box-body">
+
+                        <div class="col-md-5">
+                            <h5 class="text-muted"> Payment Details</h5>
+                            <div class="credit-card-div">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <div class="row">
+                                            <div class="col-md-12">
+
+                                                <select class="form-control" ng-change="DropDownChnaged(dropValue)" ng-model="dropValue" required
+                                                        ng-options="subplan as subplan.Name for subplan in subscriptionplans">
+                                                    <option value="">Select Plan</option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <br />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                <input type="text" class="form-control" placeholder="Credit Card Number" ng-model="paymentVM.sCreditCardNumber" maxlength="16" required />
+                                            </div>
+                                        </div>
+                                        <div class="row ">
+                                            <div class="col-md-3 col-sm-3 col-xs-3">
+                                                <span class="help-block text-muted small-font" nowrap="">Expiry Month</span>
+                                                <input type="text" class="form-control" placeholder="MM" ng-model="paymentVM.sExpiryMonth" maxlength="2" required />
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-3">
+                                                <span class="help-block text-muted small-font">  Expiry Year</span>
+                                                <input type="text" class="form-control" placeholder="YY" ng-model="paymentVM.sExpiryYear" maxlength="2" required />
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-3">
+                                                <span class="help-block text-muted small-font">  CCV</span>
+                                                <input type="text" class="form-control" placeholder="CCV" ng-model="paymentVM.sCCV" maxlength="3" required />
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-3">
+                                                <img src="data:image/png;base64,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" class="img-rounded" />
+                                            </div>
+                                        </div>
+                                        <div class="row ">
+                                            <div class="col-md-12 pad-adjust">
+                                                <input type="text" class="form-control" placeholder="Name On The Card" ng-model="paymentVM.sCardName" required />
+                                            </div>
+                                        </div>
+
+                                        <div class="row ">
+                                            <div class="col-md-12 pad-adjust">
+                                                <h5 class="text-muted">Total($) :</h5> {{ DropDownStatus }}
+                                            </div>
+                                        </div>
+                                        <div class="row ">
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <!--<div class="credit-card-div">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">-->
+                            <h5 class="text-muted"> Billing Address</h5>
+                            <div class="col-md-12" ng-repeat="BillingAddressVM in paymentVM.BillingAddressVM">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><span class="fa fa-paper-plane fa"></span></span>
+                                        <input class="form-control"
+                                               vs-google-autocomplete
+                                               ng-model="BillingAddressVM.AddressDetails"
+                                               vs-street-number="BillingAddressVM.StreetNumber"
+                                               vs-street="BillingAddressVM.StrtName"
+                                               vs-address-info="BillingAddressVM.StreetName"
+                                               vs-city="BillingAddressVM.City"
+                                               vs-state="BillingAddressVM.State"
+                                               vs-country="BillingAddressVM.Country"
+                                               vs-post-code="BillingAddressVM.Zip"
+                                               vs-latitude="BillingAddressVM.lat"
+                                               vs-longitude="BillingAddressVM.lng"
+                                               name="BillingAddressVM.AddressDetails1"
+                                               id="BillingAddressVM.AddressDetails" />
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-home"></span></span>
+                                        <input type="text" class="form-control" placeholder="Street Name" readonly="readonly" name="StreetName" data-ng-model="BillingAddressVM.StreetName" required />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-home"></span></span>
+                                        <input type="text" class="form-control" placeholder="City" readonly="readonly" name="city" data-ng-model="BillingAddressVM.City" required />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-list"></span></span>
+                                        <input type="text" class="form-control" placeholder="State" readonly="readonly" name="State" data-ng-model="BillingAddressVM.State" required />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-home"></span></span>
+                                        <input type="text" class="form-control" placeholder="Zip Code" readonly="readonly" name="ZipCode" data-ng-model="BillingAddressVM.Zip" required />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-home"></span></span>
+                                        <input type="text" class="form-control" placeholder="Country" readonly="readonly" name="Country" data-ng-model="BillingAddressVM.Country" required />
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!--</div>
+                                </div>
+                            </div>-->
+                        </div>
+                        <div class="row">
+
+                            <div class="col-md-5">
+                                <div class="row">
+                                    <h5 style="color:green;font-weight:bold;padding-left:30px;">{{ Message}}</h5>
+                                    <h5 style="color:red;font-weight:bold;padding-left:30px;">{{ ErrorMessage}}</h5>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-6 pad-adjust">
+                                    <input type="submit" class="btn btn-danger" value="CANCEL" />
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-6 pad-adjust">
+                                    <input type="submit" class="btn btn-warning btn-block" value="PAY NOW" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+        </form>
+    </div>
+
+
+
+
+    <!-- /.row -->
+</section>
