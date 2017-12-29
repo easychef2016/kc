@@ -36,13 +36,15 @@ namespace EasyChefDemo.Web.Controllers
         private readonly IEntityBaseRepository<UserRestaurant> _userrestaurant;
         private readonly IEntityBaseRepository<SubscriptionInterval> _subscriptionIntervalRepository;
         private readonly IEntityBaseRepository<Subscription> _subscriptionRepository;
+        private readonly IEntityBaseRepository<SubscriptionPlan> _subscriptionPlanRepository;
         public AccountController(IMembershipService membershipService,
            IEntityBaseRepository<Error> _errorsRepository, IUnitOfWork _unitOfWork, IEntityBaseRepository<User> userRepository,
             IEntityBaseRepository<Restaurant> restaurant, IEntityBaseRepository<Address> address,
              IEntityBaseRepository<RestaurantAddress> restaurantaddress,
             IEntityBaseRepository<UserRestaurant> userrestaurant,
              IEntityBaseRepository<SubscriptionInterval> subscriptionIntervalRepository,
-             IEntityBaseRepository<Subscription> subscriptionRepository
+             IEntityBaseRepository<Subscription> subscriptionRepository,
+             IEntityBaseRepository<SubscriptionPlan> subscriptionPlanRepository
             )
             : base(_errorsRepository, _unitOfWork)
         {
@@ -54,6 +56,7 @@ namespace EasyChefDemo.Web.Controllers
             _userrestaurant = userrestaurant;
             _subscriptionIntervalRepository = subscriptionIntervalRepository;
             _subscriptionRepository = subscriptionRepository;
+            _subscriptionPlanRepository = subscriptionPlanRepository;
         }
 
 
@@ -443,12 +446,13 @@ namespace EasyChefDemo.Web.Controllers
 
         public DateTime GetPlanIntervalEnddate(int PlanID)
         {
-            var subscriptionplans = _subscriptionIntervalRepository.GetSingle(PlanID);
+            var subscriptionplans = _subscriptionPlanRepository.GetSingle(PlanID);
+            var subscriptionInterval = _subscriptionIntervalRepository.GetSingle(subscriptionplans.IntervalId);
             DateTime dt = new DateTime();
-            if (subscriptionplans != null)
+            if (subscriptionInterval != null)
             {
 
-                dt = DateTime.UtcNow.AddDays(Convert.ToDouble(subscriptionplans.NumberofDays));
+                dt = DateTime.UtcNow.AddDays(Convert.ToDouble(subscriptionInterval.NumberofDays));
             }
             return dt;
 
